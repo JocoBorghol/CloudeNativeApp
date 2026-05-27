@@ -11,7 +11,7 @@ on:
 
 env:
   # Uppdaterat med dina faktiska resurser för att undvika kvotfel
-  AZURE_CONTAINER_REGISTRY: 'acrcloudnativebigjssjbwgccm'
+  AZURE_CONTAINER_REGISTRY: 'acrjocoinventory'
   CONTAINER_APP_NAME: 'ca-cloudnative-api'
   RESOURCE_GROUP: 'rg-joco-dev'
 
