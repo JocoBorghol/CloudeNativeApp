@@ -56,7 +56,7 @@ resource containerAppEnv 'Microsoft.App/managedEnvironments@2023-05-01' existing
 }
 
 resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
-  name: 'acrjococontainer'
+  name: 'acrjocoinventory'
   scope: resourceGroup('rg-joco-dev')
 }
 
