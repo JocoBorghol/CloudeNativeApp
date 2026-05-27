@@ -1,24 +1,24 @@
-name: .NET CD Pipeline
+﻿name: .NET CD Pipeline
 
 on:
-  # Triggar denna pipeline enbart n�r CI-pipelinen har k�rts klart
+  # Triggar denna pipeline enbart när CI-pipelinen har körts klart
   workflow_run:
     workflows: [".NET CI Pipeline"]
     types:
       - completed
-  # Till�ter �ven att vi klickar ig�ng den manuellt via GitHubs gr�nssnitt
+  # Tillåter även att vi klickar igång den manuellt via GitHubs gränssnitt
   workflow_dispatch:
 
 env:
-  # Uppdaterat med dina faktiska resurser f�r att undvika kvotfel
-  AZURE_CONTAINER_REGISTRY: 'acrjococontainer'
+  # Uppdaterat med dina faktiska resurser för att undvika kvotfel
+  AZURE_CONTAINER_REGISTRY: 'acrcloudnativebigjssjbwgccm'
   CONTAINER_APP_NAME: 'ca-cloudnative-api'
   RESOURCE_GROUP: 'rg-joco-dev'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # K�rs ENDAST om den f�reg�ende CI-pipelinen lyste gr�nt (success)
+    # Körs ENDAST om den föregående CI-pipelinen lyste grönt (success)
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
     steps:
@@ -29,7 +29,7 @@ jobs:
       uses: docker/login-action@v3
       with:
         registry: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io
-        # H�mtas s�kert fr�n GitHub Secrets f�r att undvika l�ckage
+        # Hämtas säkert från GitHub Secrets för att undvika läckage
         username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
         password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
 
@@ -39,7 +39,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        # Taggar imagen med Git Commit SHA f�r total sp�rbarhet
+        # Taggar imagen med Git Commit SHA för total spårbarhet
         tags: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_APP_NAME }}:${{ github.sha }}
 
     - name: Azure Login
